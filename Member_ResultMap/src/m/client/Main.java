@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -33,6 +35,8 @@ public class Main extends JFrame {
 
 	private String path = "m/config/config.xml";
 	private SqlSessionFactory factory;
+	private DepartmentsVO dvo;
+	
 	private List<DepartmentsVO> dvo_list;
 	
 	private JPanel contentPane;
@@ -117,23 +121,29 @@ public class Main extends JFrame {
 				SqlSession session = factory.openSession();
 				
 				dvo_list = session.selectList("dept_loc.all");
-				row = new String[dvo_list.size()][column.length];
 				
-				int i=0;
+				totalTableView();
+			}
+		});
+		
+		table.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
 				
-				for(DepartmentsVO dvo : dvo_list) {
+				int click = e.getClickCount();
+				
+				if(click == 2) {
 					
-					row[i][0] = dvo.getDepartment_id();
-					row[i][1] = dvo.getDepartment_name();
-					row[i][2] = dvo.getLvo().getLocation_id();
-					row[i][3] = dvo.getLvo().getCity();
+					int row = table.getSelectedRow();
+					System.out.println(row);
 					
-					i++;
+					dvo = dvo_list.get(row);
+					
+					new Info(Main.this, dvo).getTableData();
+					
 				}
-				
-				table.setModel(new DefaultTableModel(row, column));
-				
-				
+					
 			}
 		});
 	}
@@ -147,6 +157,26 @@ public class Main extends JFrame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void totalTableView() {
+		
+	
+		row = new String[dvo_list.size()][column.length];
+		
+		int i=0;
+		
+		for(DepartmentsVO dvo : dvo_list) {
+			
+			row[i][0] = dvo.getDepartment_id();
+			row[i][1] = dvo.getDepartment_name();
+			row[i][2] = dvo.getLvo().getLocation_id();
+			row[i][3] = dvo.getLvo().getCity();
+			
+			i++;
+		}
+		
+		table.setModel(new DefaultTableModel(row, column));
 	}
 
 }

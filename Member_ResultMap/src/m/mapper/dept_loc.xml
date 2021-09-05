@@ -5,7 +5,7 @@
 <mapper namespace="dept_loc">
   
   <!-- type : 매핑될 클래스명 -->
-  <!-- id : 외부에서 지정할 ID -->
+  <!-- id : 외부에서 지정한 ID -->
   
   	<!-- association : 테이블의 관계가 1 : 1 관계일때 사용하기 -->
   	
@@ -43,5 +43,7 @@
   	WHERE location_id = #{id}
   
   </select>
+  
+  
   
 </mapper>
