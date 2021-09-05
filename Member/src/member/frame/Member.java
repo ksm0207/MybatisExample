@@ -12,6 +12,7 @@ import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -99,15 +100,20 @@ public class Member extends JFrame {
 				List<MemberVO> list = session.selectList("member.all");
 				
 				row = new String[list.size()][column.length];
-				
+//				"사번","이름","입사일","이메일","직종","부서코드"
 				int i=0;
 				for(MemberVO vo : list) {
 					
 					row[i][0] = vo.getEmployee_id();
+					row[i][1] = vo.getLast_name();
+					row[i][2] = vo.getHire_date();
+					row[i][3] = vo.getEmail();
+					row[i][4] = vo.getJob_id();
+					row[i][5] = vo.getDepartment_id();
+					
+					i++;
 				}
-				
-				System.out.println(session);
-				
+				table.setModel(new DefaultTableModel(row, column));
 				
 			}
 		});
@@ -118,7 +124,7 @@ public class Member extends JFrame {
 			Reader reader = Resources.getResourceAsReader("member/config/config.xml");
 			factory = new SqlSessionFactoryBuilder().build(reader);
 			reader.close();
-			setTitle("DB Connection !");
+			frame.setTitle("DB Connection !");
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

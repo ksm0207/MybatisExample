@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dept_loc">
+  
+  <!-- type : 매핑될 클래스명 -->
+  <!-- id : 외부에서 지정할 ID -->
+  
+  	<!-- association : 테이블의 관계가 1 : 1 관계일때 사용하기 -->
+  	
+  <!-- property : 불러온 항목을 저장할 클래스 내의 멤버변수의 변수명  -->
+  <!-- javaType : 객체를 속성으로 가지고 있는 해당 객체 -->
+  <!-- select : 실행 할 쿼리  -->
+  <!-- column : 테이블의 컬럼명 -->
+  
+  <resultMap type="m.vo.DepartmentsVO" id="get">
+  
+  <association 
+  
+  	property="lvo" javaType="m.vo.LocationVO"
+  	column="location_id" select="getLoc">
+  
+  </association>
+  
+  </resultMap>
+  
+  <!-- 부서의 모든 정보를 조회하는 쿼리문  -->
+  <select id="all" resultMap="get">
+  	SELECT
+  	*
+  	FROM departments
+  </select>
+  
+  <!-- 위치코드를 인자로 받아서 도시정보를 반환하는 기능 -->
+  <select id="getLoc"
+          parameterType="String"
+          resultType="m.vo.LocationVO">
+  	
+  	SELECT
+  	*        
+  	FROM locations
+  	WHERE location_id = #{id}
+  
+  </select>
+  
+</mapper>
