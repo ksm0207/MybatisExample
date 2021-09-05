@@ -3,6 +3,10 @@ package m.client;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -20,7 +24,7 @@ public class Info extends JDialog {
 	private JTextField d_name_tf;
 	private JTextField city_no;
 	private JTextField city_name;
-	private JButton okButton;
+	private JButton btn;
 	private JButton cancelButton;
 	
 	
@@ -120,10 +124,10 @@ public class Info extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				btn = new JButton("OK");
+				btn.setActionCommand("OK");
+				buttonPane.add(btn);
+				getRootPane().setDefaultButton(btn);
 			}
 			
 			{
@@ -138,6 +142,43 @@ public class Info extends JDialog {
 		
 		/* Event */
 		
+		btn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				String text = btn.getText();
+				
+				String dept_id = deptno_tf.getText();
+				
+				
+				String dept_name = d_name_tf.getText();
+				String city = city_name.getText();
+				
+				Map<String, String> map = new LinkedHashMap<String, String>();
+				
+				if (text.equals("수정")) {
+					System.out.println("Info.Java btn Name = 수정 " + true);
+					
+					if(!dvo.getDepartment_name().equals(dept_name)) {
+						map.put("department_name", dept_name);
+					}
+					
+					if(!dvo.getLvo().getCity().equals(city)) {
+						map.put("city",city);
+					}
+					
+					map.put("department_id",dept_id);
+					
+					
+					main.update(map);
+					
+					
+				}
+				
+			}
+		});
+		
 	}
 	
 	public void getTableData () {
@@ -145,5 +186,8 @@ public class Info extends JDialog {
 		d_name_tf.setText(dvo.getDepartment_name());
 		city_no.setText(dvo.getLvo().getLocation_id());
 		city_name.setText(dvo.getLvo().getCity());
+		btn.setText("수정");
+		
+		
 	}
 }

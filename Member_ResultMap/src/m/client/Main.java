@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -29,6 +30,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import m.vo.DepartmentsVO;
 import java.util.List;
+import java.util.Map;
 
 
 public class Main extends JFrame {
@@ -63,7 +65,7 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	public Main() {
-		
+		 
 		db_con(path);
 		
 		setBounds(100, 100, 450, 600);
@@ -177,6 +179,20 @@ public class Main extends JFrame {
 		}
 		
 		table.setModel(new DefaultTableModel(row, column));
+	}
+	
+	public void update(Map<String,String> map) {
+		
+		SqlSession session = factory.openSession();
+		
+		int update = session.update("dept_loc.modify", map);
+		
+		if (update > 0) {
+			JOptionPane.showMessageDialog(Main.this, "Update Succsess");
+		}else {
+			JOptionPane.showMessageDialog(Main.this, "Update Fail");
+		}
+		
 	}
 
 }

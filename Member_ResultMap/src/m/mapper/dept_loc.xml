@@ -44,6 +44,27 @@
   
   </select>
   
+  <!-- 부서에 관련된 내용 수정 쿼리문 -->
+	<update id="modify" parameterType="m.vo.DepartmentsVO">
+	
+	UPDATE departments
+	
+	<trim prefix="SET" suffixOverrides=",">
+	
+		<if test="department_name != null">
+			department_name = #{department_name},
+		</if>
+		
+		<if test="city != null">
+			city = #{city},
+		</if>
+	
+	</trim>  
+	
+	WHERE department_id = #{dept_id}
+	
+	</update>
+	
   
   
 </mapper>
