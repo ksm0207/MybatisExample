@@ -6,6 +6,7 @@ public class DepartmentsVO {
 	String department_name;
 	LocationVO lvo;
 	
+	
 	public String getDepartment_id() {
 		return department_id;
 	}

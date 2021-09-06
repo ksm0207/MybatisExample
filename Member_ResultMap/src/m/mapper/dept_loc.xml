@@ -45,7 +45,7 @@
   </select>
   
   <!-- 부서에 관련된 내용 수정 쿼리문 -->
-	<update id="modify" parameterType="m.vo.DepartmentsVO">
+	<update id="modify" parameterType="String">
 	
 	UPDATE departments
 	
@@ -58,10 +58,14 @@
 		<if test="city != null">
 			city = #{city},
 		</if>
-	
+		
+		<if test="department_id != null">
+			department_id = #{department_id}
+		</if>
+		
 	</trim>  
 	
-	WHERE department_id = #{dept_id}
+	WHERE department_id = #{department_id}
 	
 	</update>
 	

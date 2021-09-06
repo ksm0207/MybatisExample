@@ -181,14 +181,19 @@ public class Main extends JFrame {
 		table.setModel(new DefaultTableModel(row, column));
 	}
 	
-	public void update(Map<String,String> map) {
+	public void update(DepartmentsVO dvo) {
 		
 		SqlSession session = factory.openSession();
+//		System.out.println("Update Content : " + dvo);
 		
-		int update = session.update("dept_loc.modify", map);
+		System.out.println("Update Department_name : " + dvo.getDepartment_name());
+		System.out.println("Update City : " + dvo.getLvo().getCity());
+		
+		int update = session.update("dept_loc.modify", dvo);
 		
 		if (update > 0) {
 			JOptionPane.showMessageDialog(Main.this, "Update Succsess");
+			session.commit();
 		}else {
 			JOptionPane.showMessageDialog(Main.this, "Update Fail");
 		}

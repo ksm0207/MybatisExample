@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import m.vo.DepartmentsVO;
+import m.vo.LocationVO;
 
 public class Info extends JDialog {
 
@@ -148,33 +149,38 @@ public class Info extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				
 				String text = btn.getText();
-				
 				String dept_id = deptno_tf.getText();
-				
 				
 				String dept_name = d_name_tf.getText();
 				String city = city_name.getText();
+				String city_code = city_no.getText();
+				
 				
 				Map<String, String> map = new LinkedHashMap<String, String>();
 				
 				if (text.equals("수정")) {
-					System.out.println("Info.Java btn Name = 수정 " + true);
-					
-					if(!dvo.getDepartment_name().equals(dept_name)) {
-						map.put("department_name", dept_name);
+					if(!dvo.getDepartment_name().equals(dept_name)) {						
+						dvo.setDepartment_name(dept_name);
 					}
 					
 					if(!dvo.getLvo().getCity().equals(city)) {
-						map.put("city",city);
+						
+						dvo.getLvo().setCity(city);
 					}
 					
-					map.put("department_id",dept_id);
 					
-					
-					main.update(map);
-					
+					main.update(dvo);
 					
 				}
+				
+			}
+		});
+		
+		cancelButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
 				
 			}
 		});
